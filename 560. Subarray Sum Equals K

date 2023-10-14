@@ -1,0 +1,46 @@
+# Intuition
+<!-- Describe your first thoughts on how to solve this problem. -->
+trying to find an TC = O(N) solution
+sliding window only works in {Z+}
+
+prefix hashmap?
+key: prefixSum, value: # of subarray that has its prefix sum = prefixSum
+
+hint: for each iteration x,
+we can find all possibility of subArraySum(i, x)
+by using prefix hashmap
+(i = 0 ~ x)
+# Approach
+<!-- Describe your approach to solving the problem. -->
+loop through nums and maintain **nowPrefixSum**
+for each iteration we see if nowPrefixSum - k is in the hashmap,
+since we can get subarray sum up to k if **PrefixSum(j)**(i.e. nowPrefixSum) - **PrefixSum(i) == k**.
+
+
+# Complexity
+- Time complexity: $$O(N)$$
+<!-- Add your time complexity here, e.g. $$O(n)$$ -->
+
+- Space complexity: $$O(N)$$
+<!-- Add your space complexity here, e.g. $$O(n)$$ -->
+
+# Code
+```python
+class Solution:
+    def zero(self):
+        return 0
+    def subarraySum(self, nums: List[int], k: int) -> int:
+        d = defaultdict(self.zero)
+        d[0] += 1
+        res = 0
+        nowPrefixSum = 0
+        for num in nums:
+            nowPrefixSum += num
+            diff = nowPrefixSum - k
+            if diff in d:
+                res += d[diff]
+            d[nowPrefixSum] += 1
+
+        return res
+
+```
